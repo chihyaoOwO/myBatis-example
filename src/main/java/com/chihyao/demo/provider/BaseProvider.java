@@ -5,9 +5,9 @@ import org.apache.ibatis.jdbc.SQL;
 
 import java.lang.reflect.Field;
 
-public class BaseProvider {
+public class BaseProvider<T> {
 
-    public String add(Object bean) {
+    public String add(T bean) {
         SQL sql = new SQL();
         String tableName = bean.getClass().getSimpleName();
         sql.INSERT_INTO(tableName);
@@ -19,7 +19,7 @@ public class BaseProvider {
 
             try {
                 if (field.get(bean) != null && !"".equals(field.get(bean)))
-                    sql.VALUES(columnName, " = #{" + columnName + "}");
+                    sql.VALUES(columnName, " #{" + columnName + "}");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -28,7 +28,7 @@ public class BaseProvider {
         return sql.toString();
     }
 
-    public String update(Object bean) {
+    public String update(T bean) {
         SQL sql = new SQL();
         String tableName = bean.getClass().getSimpleName();
         sql.UPDATE(tableName);
@@ -47,7 +47,7 @@ public class BaseProvider {
         return sql.toString();
     }
 
-    public String delete(Object bean) {
+    public String delete(T bean) {
         SQL sql = new SQL();
         String tableName = bean.getClass().getSimpleName();
         sql.DELETE_FROM(tableName);

@@ -16,7 +16,14 @@ class CustomerMapperTest {
     private CustomerMapper customerMapper;
 
     @Test
-    public void insertAndFindByName() throws Exception {
+    void insert(){
+        int add = customerMapper.add(Customer.builder().name("AAA").address("高雄市").phone("0987654321").build());
+
+        Assert.assertEquals(add, 1);
+    }
+
+    @Test
+    public void FindByName() throws Exception {
         customerMapper.insert(Customer.builder().name("AAA").address("高雄市").phone("0987654321").build());
 
         Customer c = customerMapper.findByName("AAA");
